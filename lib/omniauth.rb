@@ -92,8 +92,13 @@ module OmniAuth
     # @param name [String] The underscored name, e.g. `oauth`
     # @param camelized [String] The properly camelized name, e.g. 'OAuth'
     def add_camelization(name, camelized)
-      self.camelizations[name.to_s] = camelized.to_s
-    end
+      begin
+        self.camelizations[name.to_s] = camelized.to_s
+      rescue
+        puts "-" * 40
+        puts "name: #{name} => camelized: #{camelized}"
+      end 
+    end 
 
     attr_writer :on_failure
     attr_accessor :path_prefix, :allowed_request_methods, :form_css, :test_mode, :mock_auth, :full_host, :camelizations, :logger
